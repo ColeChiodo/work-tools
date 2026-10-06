@@ -1,9 +1,20 @@
 @echo off
 
+for /f "tokens=2,* delims=:" %%A in ('systeminfo ^| findstr /B /C:"OS Name"') do set "OS_NAME=%%B"
+for /f "tokens=2,* delims=:" %%A in ('systeminfo ^| findstr /B /C:"System Name"') do set "SYSTEM_NAME=%%B"
+for /f "tokens=2,* delims=:" %%A in ('systeminfo ^| findstr /B /C:"System Model"') do set "SYSTEM_MODEL=%%B"
+
 :MENU
-echo ====================
-echo      Work Tools
-echo ====================
+cls
+echo ==============================
+echo          Work Tools
+echo ==============================
+echo.
+echo Computer:     %SYSTEM_NAME%
+echo Model:        %SYSTEM_MODEL%
+echo OS:           %OS_NAME%
+echo.
+echo ==============================
 echo.
 echo 1. Screen Saver
 echo 2. Kill TSManager
