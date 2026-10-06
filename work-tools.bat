@@ -1,8 +1,10 @@
 @echo off
 
 for /f "tokens=1,* delims=:" %%A in ('systeminfo ^| findstr /B /C:"OS Name" /C:"System Model"') do (
-    if "%%A"=="OS Name" set "OS_NAME=%%B"
-    if "%%A"=="System Model" set "SYSTEM_MODEL=%%B"
+    for /f "tokens=* delims= " %%C in ("%%B") do (
+        if "%%A"=="OS Name" set "OS_NAME=%%C"
+        if "%%A"=="System Model" set "SYSTEM_MODEL=%%C"
+    )
 )
 
 for /f "delims=" %%A in ('hostname') do set "HOSTNAME=%%A"
