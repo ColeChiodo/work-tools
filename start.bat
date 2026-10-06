@@ -1,5 +1,15 @@
 @echo off
 
-curl -sL https://raw.githubusercontent.com/colechiodo/work-tools/main/work-tools.bat -o "%TEMP%\work-tools.bat"
-call "%TEMP%\work-tools.bat"
-del "%TEMP%\work-tools.bat"
+set "TEMP_BAT=%TEMP%\work-tools.bat"
+
+curl -sL https://raw.githubusercontent.com/YOURNAME/YOURREPO/main/work-tools.bat -o "%TEMP_BAT%"
+
+if not exist "%TEMP_BAT%" (
+    echo Failed to download Work Tools.
+    exit /b 1
+)
+
+start "" /wait cmd /c "%TEMP_BAT%"
+
+del "%TEMP_BAT%"
+exit
