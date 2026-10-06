@@ -1,4 +1,5 @@
 @echo off
+setlocal
 
 for /f "tokens=1,* delims=:" %%A in ('systeminfo ^| findstr /B /C:"OS Name" /C:"System Model"') do (
     for /f "tokens=* delims= " %%C in ("%%B") do (
@@ -26,14 +27,16 @@ echo ==============================
 echo.
 echo 1. Screen Saver
 echo 2. Kill TSManager
-echo 3. Exit
+echo 3. Count Upgraded PCs
+echo 4. Exit
 echo.
 
 set /p choice="Select: "
 
 if "%choice%"=="1" goto SCREENSAVER
 if "%choice%"=="2" goto KILLTSMANAGER
-if "%choice%"=="3" goto END
+if "%choice%"=="3" goto COUNTUPGRADES
+if "%choice%"=="4" goto END
 
 echo Invalid choice. Try Again.
 pause
@@ -110,7 +113,22 @@ echo Done.
 pause
 goto MENU
 
+:COUNTUPGRADES
+echo Counting PCs upgraded to Windows 11...
+
+set /a count=0
+
+for /f "delims=" %%A in ('powershell -NoProfile -Command "Get-ADComputer -Filter * -Properties OperatingSystem | Where-Object { $_.OperatingSystem -like 'Windows 11*' } | Measure-Object | Select-Object -ExpandProperty Count"') do (
+    set count=%%A
+)
+
+echo Windows 11 computers: %count% / 8230
+
+pause
+goto MENU
+
 :END
 echo Goodbye :)
 pause
+endlocal
 exit /b
