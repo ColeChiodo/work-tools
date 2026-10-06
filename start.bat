@@ -9,7 +9,5 @@ if not exist "%TEMP_BAT%" (
     exit /b 1
 )
 
-conhost.exe cmd.exe /k "%TEMP_BAT%"
-
-del "%TEMP_BAT%"
+conhost.exe cmd.exe /c "call "%TEMP_BAT%" & del "%TEMP_BAT%""
 exit
