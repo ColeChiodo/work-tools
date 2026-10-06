@@ -117,12 +117,16 @@ goto MENU
 echo Counting PCs upgraded to Windows 11...
 
 set /a count=0
+set /a total=8230
 
 for /f "delims=" %%A in ('powershell -NoProfile -Command "Get-ADComputer -Filter * -Properties OperatingSystem | Where-Object { $_.OperatingSystem -like 'Windows 11*' } | Measure-Object | Select-Object -ExpandProperty Count"') do (
     set count=%%A
 )
 
-echo Windows 11 computers: %count% / 8230
+set /a percentage=count*100/total
+
+echo Windows 11 computers: %count% / %total%
+echo Windows 11 percentage: %percentage%%%
 
 pause
 goto MENU
