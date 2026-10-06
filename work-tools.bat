@@ -1,8 +1,11 @@
 @echo off
 
-for /f "tokens=2,* delims=:" %%A in ('systeminfo ^| findstr /B /C:"OS Name"') do set "OS_NAME=%%B"
-for /f "tokens=2,* delims=:" %%A in ('systeminfo ^| findstr /B /C:"System Name"') do set "SYSTEM_NAME=%%B"
-for /f "tokens=2,* delims=:" %%A in ('systeminfo ^| findstr /B /C:"System Model"') do set "SYSTEM_MODEL=%%B"
+for /f "tokens=1,* delims=:" %%A in ('systeminfo ^| findstr /B /C:"OS Name" /C:"System Model"') do (
+    if "%%A"=="OS Name" set "OS_NAME=%%B"
+    if "%%A"=="System Model" set "SYSTEM_MODEL=%%B"
+)
+
+for /f "delims=" %%A in ('hostname') do set "HOSTNAME=%%A"
 
 :MENU
 cls
@@ -10,9 +13,9 @@ echo ==============================
 echo          Work Tools
 echo ==============================
 echo.
-echo Computer:     %SYSTEM_NAME%
-echo Model:        %SYSTEM_MODEL%
-echo OS:           %OS_NAME%
+echo Hostname: %HOSTNAME%
+echo Model: %SYSTEM_MODEL%
+echo OS: %OS_NAME%
 echo.
 echo ==============================
 echo.
