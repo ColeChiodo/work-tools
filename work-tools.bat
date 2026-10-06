@@ -77,10 +77,13 @@ reg add "HKCU\Control Panel\Desktop" /v "ScreenSaveTimeOut" /t REG_SZ /d "600" /
 reg add "HKCU\Control Panel\Desktop" /v "ScreenSaverIsSecure" /t REG_SZ /d "1" /f
 
 :: Photos screen saver settings
-reg add "HKCU\Software\Microsoft\Windows Photo Viewer\Slideshow\Screensaver" /v "Speed" /t REG_DWORD /d "0" /f
+reg add "HKCU\Software\Microsoft\Windows Photo Viewer\Slideshow\Screensaver" /v "ImagesRootPath" /t REG_SZ /d "%PHOTO_PATH%" /f
 
 :: Shuffle pictures
 reg add "HKCU\Software\Microsoft\Windows Photo Viewer\Slideshow\Screensaver" /v "Shuffle" /t REG_DWORD /d "1" /f
+
+:: Slideshow speed
+reg add "HKCU\Software\Microsoft\Windows Photo Viewer\Slideshow\Screensaver" /v "Speed" /t REG_DWORD /d "0" /f
 
 echo.
 echo Screen saver configured.
