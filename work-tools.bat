@@ -10,9 +10,6 @@ for /f "tokens=1,* delims=:" %%A in ('systeminfo ^| findstr /B /C:"OS Name" /C:"
 
 for /f "delims=" %%A in ('hostname') do set "HOSTNAME=%%A"
 
-set "OS_NAME=%OS_NAME:~1%"
-set "SYSTEM_MODEL=%SYSTEM_MODEL:~1%"
-
 :MENU
 cls
 echo ==============================
