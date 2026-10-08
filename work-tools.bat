@@ -33,7 +33,7 @@ echo.
 set /p choice="Select: "
 
 if "%choice%"=="1" goto SCREENSAVER
-if "%choice%"=="2" goto RESETSC
+if "%choice%"=="2" goto SOFTCNTR
 if "%choice%"=="3" goto ENABLEMPR
 if "%choice%"=="4" goto KILLTSMANAGER
 if "%choice%"=="5" goto COUNTUPGRADES
@@ -92,7 +92,8 @@ echo Screen saver configured.
 pause
 goto MENU
 
-:RESETSC
+:SOFTCNTR
+
 :: Forcefully stop core deployment services
 echo Stopping core deployment services...
 net stop wuauserv
