@@ -33,7 +33,7 @@ echo.
 set /p choice="Select: "
 
 if "%choice%"=="1" goto SCREENSAVER
-if "%choice%"=="2" goto RESETSOFTCNTR
+if "%choice%"=="2" goto RESETSC
 if "%choice%"=="3" goto ENABLEMPR
 if "%choice%"=="4" goto KILLTSMANAGER
 if "%choice%"=="5" goto COUNTUPGRADES
@@ -92,25 +92,21 @@ echo Screen saver configured.
 pause
 goto MENU
 
-:RESETSOFTCNTR
+:RESETSC
 :: Forcefully stop core deployment services
 echo Stopping core deployment services...
 net stop wuauserv
 net stop bits
 net stop cryptsvc
-
 :: Clear the update cache files
 echo Clearing update cache files...
 rd /s /q %windir%\SoftwareDistribution\DataStore
-
 :: Drop stuck task
 echo Stopping stuck task...
 powershell -Command "Get-CimInstance -Namespace root\ccm\SoftMgmtAgent -ClassName CCM_TSExecutionRequest | Remove-CimInstance"
-
 :: refresh software center
 echo Refreshing software center...
 powershell -Command "Restart-Service ccmexec -Force"
-
 echo Done.
 echo.
 pause
