@@ -92,26 +92,33 @@ echo Screen saver configured.
 pause
 goto MENU
 
+
 :SOFTCNTR
 
-:: Forcefully stop core deployment services
 echo Stopping core deployment services...
 net stop wuauserv
 net stop bits
 net stop cryptsvc
+
 :: Clear the update cache files
 echo Clearing update cache files...
 rd /s /q %windir%\SoftwareDistribution\DataStore
+
 :: Drop stuck task
 echo Stopping stuck task...
 powershell -Command "Get-CimInstance -Namespace root\ccm\SoftMgmtAgent -ClassName CCM_TSExecutionRequest | Remove-CimInstance"
+
 :: refresh software center
 echo Refreshing software center...
 powershell -Command "Restart-Service ccmexec -Force"
+
 echo Done.
 echo.
 pause
 goto MENU
+
+
+
 
 :ENABLEMPR
 echo Fixing EPIC Login bluescreen...
