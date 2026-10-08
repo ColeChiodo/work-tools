@@ -24,8 +24,9 @@ echo ==============================
 echo.
 echo 1. Screen Saver
 echo 2. Reset Software Center
-echo 3. Kill TSManager
-echo 4. Count Upgraded PCs
+echo 3. Fix Epic Bluescreen
+echo 4. Kill TSManager
+echo 5. Count Upgraded PCs
 echo 0. Exit
 echo.
 
@@ -33,8 +34,9 @@ set /p choice="Select: "
 
 if "%choice%"=="1" goto SCREENSAVER
 if "%choice%"=="2" goto RESETSOFTCNTR
-if "%choice%"=="3" goto KILLTSMANAGER
-if "%choice%"=="4" goto COUNTUPGRADES
+if "%choice%"=="3" goto ENABLEMPR
+if "%choice%"=="4" goto KILLTSMANAGER
+if "%choice%"=="5" goto COUNTUPGRADES
 if "%choice%"=="0" goto END
 
 echo Invalid choice. Try Again.
@@ -96,21 +98,29 @@ echo Stopping core deployment services...
 net stop wuauserv
 net stop bits
 net stop cryptsvc
- 
+
 :: Clear the update cache files
 echo Clearing update cache files...
 rd /s /q %windir%\SoftwareDistribution\DataStore
- 
+
 :: Drop stuck task
 echo Stopping stuck task...
 powershell -Command "Get-CimInstance -Namespace root\ccm\SoftMgmtAgent -ClassName CCM_TSExecutionRequest | Remove-CimInstance"
- 
+
 :: refresh software center
 echo Refreshing software center...
 powershell -Command "Restart-Service ccmexec -Force"
- 
+
 echo Done.
 echo.
+pause
+goto MENU
+
+:ENABLEMPR
+echo Fixing EPIC Login bluescreen...
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "EnableMprNotification" /t REG_DWORD /d 1 /f
+gpupdate /force
+echo MPR Enabled.
 pause
 goto MENU
 
