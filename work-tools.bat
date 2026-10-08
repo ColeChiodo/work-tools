@@ -91,7 +91,7 @@ echo Screen saver configured.
 
 pause
 goto MENU
- 
+
 :RESETSOFTCNTR
 :: Forcefully stop core deployment services
 echo Stopping core deployment services...
